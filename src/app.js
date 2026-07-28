@@ -1,8 +1,10 @@
 const express = require('express');
 const apiRoutes = require('./routes/api');
+const socialRoutes = require('./routes/social');
 
 const app = express();
-app.use(express.json());
+// limite alargado para caber fotos de perfil em base64 (ver MAX_AVATAR_LENGTH em store.js)
+app.use(express.json({ limit: '3mb' }));
 
 // CORS liberal — protótipo v1, sem dados sensíveis reais, para permitir
 // testar a partir de uma página de demonstração num browser.
@@ -19,5 +21,6 @@ app.get('/', (req, res) => {
 });
 
 app.use('/v1', apiRoutes);
+app.use('/v1', socialRoutes);
 
 module.exports = app;
